@@ -7,5 +7,7 @@
             "Symplefony\\": "./Symplefony/"
         }
     },
-    "require": {}
+    "require": {
+        "miladrahimi/phprouter": "5.*"
+    }
 }

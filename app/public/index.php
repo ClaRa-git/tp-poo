@@ -3,18 +3,15 @@
 // Chargement du système d'autoload
 require_once '../vendor/autoload.php';
 
-// Déclaration des classes que l'on va utiliser dans le fichier
-use App\App;
-use Symplefony\Database;
+use MiladRahimi\PhpRouter\Router;
 
-var_dump( App::getApp() );
-var_dump( Database::getDd() );
+$router = Router::create();
 
-$truc = App::getApp();
-$machin = clone $truc;
+$router->get('/', function () {
+    return 'Bonjour accueil';
+});
+$router->get('/contact', function () {
+    return 'Bonjour page de contact';
+});
 
-$truc->toto( 'Truc a dit' );
-$truc->toto( 'Et ensuite il a dit ' );
-$machin->toto( 'Machin a dit' );
-var_dump( $truc );
-var_dump( $machin );
+$router->dispatch();

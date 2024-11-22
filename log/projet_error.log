@@ -1,0 +1,8 @@
+2024/11/22 15:59:28 [error] 29#29: *1 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.21.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"
+2024/11/22 15:59:28 [error] 29#29: *1 open() "/var/www/html/public/favicon.ico" failed (2: No such file or directory), client: 172.21.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/contact"
+2024/11/22 16:00:58 [error] 29#29: *1 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.21.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"
+2024/11/22 16:02:31 [error] 31#31: *3 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.21.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"
+2024/11/22 16:16:34 [error] 29#29: *1 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.25.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"
+2024/11/22 16:17:10 [error] 29#29: *1 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.25.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"
+2024/11/22 16:17:20 [error] 29#29: *1 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.25.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"
+2024/11/22 16:17:21 [error] 29#29: *1 open() "/var/www/html/public/contact" failed (2: No such file or directory), client: 172.25.0.1, server: localhost, request: "GET /contact HTTP/1.1", host: "localhost"

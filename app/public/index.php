@@ -3,17 +3,14 @@
 // Chargement du système d'autoload
 require_once '../vendor/autoload.php';
 
+use App\Controller\PageController;
 use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
 use MiladRahimi\PhpRouter\Router;
 
 $router = Router::create();
 
-$router->get('/', function () {
-    return 'Bonjour accueil';
-});
-$router->get('/contact', function () {
-    return 'Bonjour page de contact';
-});
+$router->get( '/', [ PageController::class, 'index' ] );
+$router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
 
 try{
     $router->dispatch();

@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use Symplefony\View;
+
 class PageController
 {
     // Page d'accueil
     public function index(): void
     {
-        echo 'Bonjour depuis le Controller';
+        $view = new View();
+
+        $view->render();
     }
 
     // Page mentions légales

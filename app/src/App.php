@@ -7,17 +7,20 @@
 namespace App;
 
 use Exception;
+use Throwable;
 
-class App
+use MiladRahimi\PhpRouter\Router;
+use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
+
+use App\Controller\PageController;
+
+final class App
 {
-    // Singleton Etape 2: on crée une propriété statique pour stocker l'instance unique
-    // "?self" :
-    // - self représente le type de la class dans laquelle on est (ici = App)
-    // - ? précise que la valeur peut aussi contenir null
     private static ?self $app_instance = null;
-    private string $last_message;
 
-    // Singleton Etape 3: On crée un méthode publique statique qui permet d'obtenir l'instance unique
+    // Le routeur de l'application
+    private Router $router;
+
     public static function getApp(): self
     {
         // Si l'instance n'existe pas encore on la crée
@@ -28,19 +31,46 @@ class App
         return self::$app_instance;
     }
 
-    public function toto( string $msg ): void
+    // Démarrage de l'application
+    public function start(): void
     {
-        $this->last_message = $msg;
-        echo $msg. ' Je suis Toto !';
+        $this->registerRoutes();
+        $this->startRouter();
     }
 
-    // Singleton Etape 1: Bloquer l'utilisation de "new" depuis l'extérieur
-    // => passer le constructeur en "private"
-    private function __construct() { } 
-    // Singleton Etape 4: Bloquer l'utilisation de "clone" depuis l'extérieur
+    private function __construct()
+    {
+        // Création du routeur
+        $this->router = Router::create();
+    }
+
+    // Enregistrement des routes de l'application
+    private function registerRoutes(): void
+    {
+        // Pages communes
+        $this->router->get( '/', [ PageController::class, 'index' ] );
+        $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
+    }
+
+    // Démarrage du routeur
+    private function startRouter(): void
+    {
+        try{
+            $this->router->dispatch();
+        }
+        // Page 404 avec status HTTP adequat pour les pages non listée dans le routeur
+        catch( RouteNotFoundException $e ) {
+            http_response_code( 404 );
+            echo 'Oups... La page n\'existe pas';
+        }
+        // Erreur 500 avec status HTTP adequat pour tout autre problème temporaire ou non
+        catch( Throwable $e ) {
+            http_response_code( 500 );
+            echo 'Erreur interne du serveur';
+        }
+    } 
+
     private function __clone() { }
-    // Singleton Etape 5: Bloquer la désérialisation de l'objet (depuis la session par exemple)
-    // "private" est interdit pour ce cas, on va donc lui faire lancer une erreur
     public function __wakeup()
     {
         throw new Exception( "Non c'est interdit !" );

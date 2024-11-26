@@ -11,9 +11,12 @@ use Throwable;
 
 use MiladRahimi\PhpRouter\Router;
 use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
+use MiladRahimi\PhpRouter\Routing\Attributes;
 
 use App\Controller\AdminController;
+use App\Controller\AuthController;
 use App\Controller\PageController;
+use App\Middleware\AdminMiddleware;
 
 final class App
 {
@@ -50,8 +53,17 @@ final class App
     {
         // Pages communes
         $this->router->get( '/', [ PageController::class, 'index' ] );
-        $this->router->get( '/admin', [ AdminController::class, 'dashboard' ]);
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
+        
+        // Pages d'admin
+        $adminAttributes = [
+            Attributes::PREFIX => '/admin',
+            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
+        ];
+
+        $this->router->group( $adminAttributes, function( Router $router ) {
+            $router->get( '', [ AdminController::class, 'dashboard' ]);
+        });
     }
 
     // Démarrage du routeur

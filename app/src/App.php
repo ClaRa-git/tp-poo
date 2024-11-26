@@ -12,6 +12,7 @@ use Throwable;
 use MiladRahimi\PhpRouter\Router;
 use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
 
+use App\Controller\AdminController;
 use App\Controller\PageController;
 
 final class App
@@ -49,6 +50,7 @@ final class App
     {
         // Pages communes
         $this->router->get( '/', [ PageController::class, 'index' ] );
+        $this->router->get( '/admin', [ AdminController::class, 'dashboard' ]);
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
     }
 

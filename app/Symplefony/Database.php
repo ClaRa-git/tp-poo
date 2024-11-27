@@ -3,18 +3,25 @@
 namespace Symplefony;
 
 use Exception;
+use PDO;
 
 class Database
 {
-    private static ?self $db_instance = null;
+    private const PDO_OPTIONS = [
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ];
+    
+    private static ?PDO $pdo_instance = null;
 
-    public static function getDd(): self
+    public static function getPDO(): PDO
     {
-        if( is_null( self::$db_instance ) ) {
-            self::$db_instance = new self();
+        if( is_null( self::$pdo_instance ) ) {
+            $dsn = sprintf( 'mysql:host=%s;dbname=%s', $_ENV['db_host'], $_ENV['db_name'] );
+
+            self::$pdo_instance = new PDO( $dsn, $_ENV['db_user'], $_ENV['db_pass'], self::PDO_OPTIONS );
         }
         
-        return self::$db_instance;
+        return self::$pdo_instance;
     }
     
     private function __construct() { }

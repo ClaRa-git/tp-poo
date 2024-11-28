@@ -86,6 +86,39 @@ class UserModel extends Model
         return $user;
     }
 
+    /* cRud: Read tous les items */
+    public static function getAll(): array
+    {
+        $query = sprintf(
+            'SELECT * FROM `%s`',
+            self::TABLE_NAME
+        );
+
+        $sth = Database::getPDO()->prepare( $query );
+
+        // Si la préparation échoue
+        if( ! $sth ) {
+            return [];
+        }
+
+        $success = $sth->execute();
+
+        // Si echec
+        if( ! $success ) {
+            return [];
+        }
+
+        // Récupération des résultats
+        $users = [];
+
+        while( $user_data = $sth->fetch() ) {
+            $user = new UserModel( $user_data );
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
     /* cRud: Read un item par son id */
     public static function getById( int $id ): ?self
     {
@@ -108,7 +141,7 @@ class UserModel extends Model
             return null;
         }
 
-        // Ajout de l'id de l'item créé en base de données
+        // Récupération du premier résultat
         $user = $sth->fetch();
 
         // Si aucun user ne correspond

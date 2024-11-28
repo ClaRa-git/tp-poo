@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
-use Symplefony\View;
 use PDO;
-use App\Model\UserModel;
-use Symplefony\Database;
 
-class PageController
+use Symplefony\Controller;
+use Symplefony\Database;
+use Symplefony\View;
+
+use App\Model\UserModel;
+class PageController extends Controller
 {
     // Page d'accueil
     public function index(): void
@@ -26,6 +28,6 @@ class PageController
     {
         echo 'Les mentions légales !';
 
-        var_dump( UserModel::getById(4456) );
+        var_dump( UserModel::getById(4) );
     }
 }

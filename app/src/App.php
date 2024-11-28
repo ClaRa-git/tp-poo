@@ -18,6 +18,7 @@ use Symplefony\View;
 use App\Controller\AdminController;
 use App\Controller\AuthController;
 use App\Controller\PageController;
+use App\Controller\UserController;
 use App\Middleware\AdminMiddleware;
 
 final class App
@@ -26,6 +27,7 @@ final class App
 
     // Le routeur de l'application
     private Router $router;
+    public function getRouter(): Router { return $this->router; }
 
     public static function getApp(): self
     {
@@ -53,11 +55,17 @@ final class App
     // Enregistrement des routes de l'application
     private function registerRoutes(): void
     {
-        // Pages communes
+        // -- Formats des paramètres --
+        // {id} doit être un nombre
+        $this->router->pattern( 'id', '\d+' );
+
+        // -- Pages communes --
         $this->router->get( '/', [ PageController::class, 'index' ] );
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
         
-        // Pages d'admin
+        // TODO: Groupe Visiteurs (non-connectés)
+
+        // -- Pages d'admin --
         $adminAttributes = [
             Attributes::PREFIX => '/admin',
             Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
@@ -65,6 +73,16 @@ final class App
 
         $this->router->group( $adminAttributes, function( Router $router ) {
             $router->get( '', [ AdminController::class, 'dashboard' ]);
+
+            // -- User --
+            // Ajout
+            $router->get( '/users/add', [ UserController::class, 'add' ] );
+            $router->post( '/users', [ UserController::class, 'create' ] );
+
+            // Liste
+            $router->get( '/users', [ UserController::class, 'index' ]);
+            // Détail
+            $router->get( '/users/{id}', [ UserController::class, 'show' ] );
         });
     }
 

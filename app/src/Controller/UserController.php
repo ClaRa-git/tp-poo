@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\User;
+use App\Model\Repository\UserRepository;
 use Laminas\Diactoros\ServerRequest;
 
 use Symplefony\Controller;
 use Symplefony\View;
 
-use App\Model\UserModel;
+use Symplefony\Database;
 
 class UserController extends Controller
 {
@@ -53,9 +55,11 @@ class UserController extends Controller
     {
         $user_data = $request->getParsedBody();
 
-        $user = new UserModel( $user_data );
+        $user = new User( $user_data );
 
-        $user_created = UserModel::create( $user );
+        $repo = new UserRepository( Database::getPDO() );
+
+        $user_created = $repo->create( $user );
 
         if( is_null( $user_created ) ) {
             // TODO: gérer une erreur
@@ -70,9 +74,11 @@ class UserController extends Controller
     {
         $view = new View( 'user:admin:list' );
 
+        $repo = new UserRepository( Database::getPDO() );
+
         $data = [
             'title' => 'Liste des utilisateurs',
-            'users' => UserModel::getAll()
+            'users' => $repo->getAll()
         ];
 
         $view->render( $data );
@@ -83,7 +89,8 @@ class UserController extends Controller
     {
         $view = new View( 'user:admin:details' );
 
-        $user = UserModel::getById( $id );
+        $repo = new UserRepository( Database::getPDO() );
+        $user = $repo->getById( $id );
 
         // Si l'utilisateur demandé n'existe pas
         if( is_null( $user ) ) {

@@ -2,7 +2,7 @@
 
 namespace Symplefony\Model;
 
-abstract class Model
+abstract class Model implements IModel
 {
     protected int $id;
     public function getId(): int { return $this->id; }

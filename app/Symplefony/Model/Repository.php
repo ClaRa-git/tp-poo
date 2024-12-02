@@ -3,14 +3,12 @@
 namespace Symplefony\Model;
 
 use PDO;
-use Symplefony\Database;
 
 abstract class Repository
 {
     protected PDO $pdo;
-    
-    abstract public static function getTableName(): string;
-    abstract public function getAll(): array;
+
+    abstract protected function getTableName(): string;
 
     public function __construct( PDO $pdo )
     {
@@ -22,7 +20,7 @@ abstract class Repository
     {
         $query = sprintf(
             'SELECT * FROM `%s`',
-            get_called_class()::getTableName()
+            $this->getTableName()
         );
 
         $sth = $this->pdo->prepare( $query );

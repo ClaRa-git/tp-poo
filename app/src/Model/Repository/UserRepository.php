@@ -8,7 +8,7 @@ use App\Model\Entity\User;
 
 class UserRepository extends Repository
 {
-    public static function getTableName(): string { return 'users'; }
+    protected function getTableName(): string { return 'users'; }
 
     /* Crud: Create */
     public function create( User $user ): ?User
@@ -17,7 +17,7 @@ class UserRepository extends Repository
             'INSERT INTO `%s` 
                 (`password`,`email`,`firstname`,`lastname`,`phone_number`) 
                 VALUES (:password,:email,:firstname,:lastname,:phone_number)',
-            self::getTableName()
+            $this->getTableName()
         );
 
         $sth = $this->pdo->prepare( $query );

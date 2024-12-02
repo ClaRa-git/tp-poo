@@ -6,16 +6,15 @@ use App\Model\Repository\RepoManager;
 use Symplefony\Controller;
 use Symplefony\View;
 
-class CategoryController extends Controller
+class CarController extends Controller
 {
-    // Admin: Liste
     public function index(): void
     {
-        $view = new View('category:admin:list');
+        $view = new View('car:admin:list');
 
         $data = [
-            'title' => 'Liste des catégories',
-            'categories' => RepoManager::getRM()->getCategoryRepo()->getAll()
+            'title' => 'Liste des voitures',
+            'cars' => RepoManager::getRM()->getCarRepo()->getAll()
         ];
 
         $view->render($data);

@@ -1,0 +1,21 @@
+<h1>Voitures</h1>
+<?php if (!empty($cars)): ?>
+    <ul>
+        <?php foreach ($cars as $car): ?>
+            <li>
+                <ul>
+                    <li>id: <?php echo $car->getId() ?></li>
+                    <li>label: <?php echo $car->getLabel() ?></li>
+                    <li>seats: <?php echo $car->getSeats() ?> </li>
+                    <li>energy: <?php echo $car->getEnergy() ?> </li>
+                    <li>plate number: <?php echo $car->getPlateNumber() ?> </li>
+                    <li>price day: <?php echo $car->getPriceDay() ?> </li>
+                    <li>price distance: <?php echo $car->getPriceDistance() ?> </li>
+                    <li>image: <?php echo $car->getImage() ?> </li>
+                </ul>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Aucune voiture enregistrée.</p>
+    <?php endif; ?>
+    </ul>

@@ -2,14 +2,14 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Category;
+use App\Model\Entity\Car;
 use Symplefony\Model\Repository;
 
-class CategoryRepository extends Repository
+class CarRepository extends Repository
 {
     protected function getTableName(): string
     {
-        return 'categories';
+        return 'cars';
     }
 
     /** Crud : create */
@@ -18,12 +18,12 @@ class CategoryRepository extends Repository
     /** Crud : read */
     public function getAll(): array
     {
-        return $this->readAll(Category::class);
+        return $this->readAll(Car::class);
     }
 
     /* cRud: Read un item par son id */
-    public function getById(int $id): ?Category
+    public function getById(int $id): ?Car
     {
-        return $this->readById(Category::class, $id);
+        return $this->readById(Car::class, $id);
     }
 }

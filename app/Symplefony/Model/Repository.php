@@ -10,40 +10,40 @@ abstract class Repository
 
     abstract protected function getTableName(): string;
     abstract public function getAll(): array;
-    abstract public function getById( int $id ): mixed;
+    abstract public function getById(int $id): mixed;
 
-    public function __construct( PDO $pdo )
+    public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
-    
+
     /* cRud: Read tous les items */
-    protected function readAll( string $class_name ): array
+    protected function readAll(string $class_name): array
     {
         $query = sprintf(
             'SELECT * FROM `%s`',
             $this->getTableName()
         );
 
-        $sth = $this->pdo->prepare( $query );
+        $sth = $this->pdo->prepare($query);
 
         // Si la préparation échoue
-        if( ! $sth ) {
+        if (! $sth) {
             return [];
         }
 
         $success = $sth->execute();
 
         // Si echec
-        if( ! $success ) {
+        if (! $success) {
             return [];
         }
 
         // Récupération des résultats
         $users = [];
 
-        while( $user_data = $sth->fetch() ) {
-            $user = new $class_name( $user_data );
+        while ($user_data = $sth->fetch()) {
+            $user = new $class_name($user_data);
             $users[] = $user;
         }
 
@@ -51,24 +51,24 @@ abstract class Repository
     }
 
     /* cRud: Read un item par son id */
-    protected function readById( string $class_name, int $id ): ?Model
+    protected function readById(string $class_name, int $id): ?Entity
     {
         $query = sprintf(
             'SELECT * FROM `%s` WHERE id=:id',
             $this->getTableName()
         );
 
-        $sth = $this->pdo->prepare( $query );
+        $sth = $this->pdo->prepare($query);
 
         // Si la préparation échoue
-        if( ! $sth ) {
+        if (! $sth) {
             return null;
         }
 
-        $success = $sth->execute([ 'id' => $id ]);
+        $success = $sth->execute(['id' => $id]);
 
         // Si echec
-        if( ! $success ) {
+        if (! $success) {
             return null;
         }
 
@@ -76,10 +76,10 @@ abstract class Repository
         $object_data = $sth->fetch();
 
         // Si aucun user ne correspond
-        if( ! $object_data ) {
+        if (! $object_data) {
             return null;
         }
 
-        return new $class_name( $object_data );
+        return new $class_name($object_data);
     }
 }

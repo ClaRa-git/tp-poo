@@ -1,0 +1,15 @@
+<h1>Catégories</h1>
+<?php if (!empty($categories)): ?>
+    <ul>
+        <?php foreach ($categories as $category): ?>
+            <li>
+                <ul>
+                    <li>id: <?php echo $category->getId() ?></li>
+                    <li>label: <?php echo $category->getLabel() ?></li>
+                </ul>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Aucune catégorie enregistrée.</p>
+    <?php endif; ?>
+    </ul>

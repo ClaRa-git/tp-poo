@@ -1,0 +1,5 @@
+Autodingo est une application de gestionde location courte durée de voitures.
+Les fonctionnalités souhaitées sont les suivantes :
+- le client peut louer une voiture à la journée.
+- le chef d'entreprise peut créer/modifier/supprimer des voitures, des locations, des clients, des catégories, des commerciaux.
+- le commercial peut créer/modifier des locations et des clients.

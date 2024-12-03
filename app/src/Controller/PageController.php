@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Repository\RepoManager;
 use PDO;
 
 use Symplefony\Controller;
@@ -9,18 +10,19 @@ use Symplefony\Database;
 use Symplefony\View;
 
 use App\Model\UserModel;
+
 class PageController extends Controller
 {
     // Page d'accueil
     public function index(): void
     {
-        $view = new View( 'page:home' );
+        $view = new View('page:home');
 
         $data = [
             'title' => 'Accueil - Autodingo.com'
         ];
 
-        $view->render( $data );
+        $view->render($data);
     }
 
     // Page mentions légales
@@ -28,6 +30,6 @@ class PageController extends Controller
     {
         echo 'Les mentions légales !';
 
-        var_dump( UserModel::getById(4) );
+        var_dump(RepoManager::getRM()->getUserRepo()->getById(2));
     }
 }

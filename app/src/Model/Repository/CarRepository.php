@@ -15,7 +15,7 @@ class CarRepository extends Repository
     /** Crud : create */
     // TODO: Faire le create
 
-    /** Crud : read */
+    /** cRud : read */
     public function getAll(): array
     {
         return $this->readAll(Car::class);

@@ -72,7 +72,7 @@ class Car extends Entity
         return $this;
     }
 
-    protected ?string $image;
+    protected ?string $image = null;
     public function getImage(): ?string
     {
         return $this->image;

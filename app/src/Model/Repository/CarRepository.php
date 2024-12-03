@@ -13,7 +13,42 @@ class CarRepository extends Repository
     }
 
     /** Crud : create */
-    // TODO: Faire le create
+    public function create(Car $car): ?Car
+    {
+        $query = sprintf(
+            'INSERT INTO `%s` 
+                (`label`,`seats`,`energy`,`plate_number`,`price_day`,`price_distance`,`image`) 
+                VALUES (:label,:seats,:energy,:plate_number,:price_day,:price_distance,:image)',
+            $this->getTableName()
+        );
+
+        $sth = $this->pdo->prepare($query);
+
+        // Si la préparation échoue
+        if (! $sth) {
+            return null;
+        }
+
+        $success = $sth->execute([
+            'label' => $car->getLabel(),
+            'seats' => $car->getSeats(),
+            'energy' => $car->getEnergy(),
+            'plate_number' => $car->getPlateNumber(),
+            'price_day' => $car->getPriceDay(),
+            'price_distance' => $car->getPriceDistance(),
+            'image' => $car->getImage()
+        ]);
+
+        // Si echec de l'insertion
+        if (! $success) {
+            return null;
+        }
+
+        // Ajout de l'id de l'item créé en base de données
+        $car->setId($this->pdo->lastInsertId());
+
+        return $car;
+    }
 
     /** cRud : read */
     public function getAll(): array
@@ -25,5 +60,48 @@ class CarRepository extends Repository
     public function getById(int $id): ?Car
     {
         return $this->readById(Car::class, $id);
+    }
+
+    /* crUd: Update */
+    public function update(Car $car): ?Car
+    {
+        $query = sprintf(
+            'UPDATE `%s` 
+                SET
+                    `label`=:label,
+                    `seats`=:seats,
+                    `energy`=:energy,
+                    `plate_number`=:plate_number,
+                    `price_day`=:price_day,
+                    `price_distance`=:price_distance,
+                    `image`=:image
+                WHERE id=:id',
+            $this->getTableName()
+        );
+
+        $sth = $this->pdo->prepare($query);
+
+        // Si la préparation échoue
+        if (! $sth) {
+            return null;
+        }
+
+        $success = $sth->execute([
+            'label' => $car->getLabel(),
+            'seats' => $car->getSeats(),
+            'energy' => $car->getEnergy(),
+            'plate_number' => $car->getPlateNumber(),
+            'price_day' => $car->getPriceDay(),
+            'price_distance' => $car->getPriceDistance(),
+            'image' => $car->getImage(),
+            'id' => $car->getId()
+        ]);
+
+        // Si echec de la mise à jour
+        if (! $success) {
+            return null;
+        }
+
+        return $car;
     }
 }

@@ -40,6 +40,7 @@ class CategoryController extends Controller
 
         if (is_null($category_created)) {
             // TODO: gérer une erreur
+            // mettre dans la session le tableau des erreurs
             $this->redirect('/admin/categories/add');
         }
 

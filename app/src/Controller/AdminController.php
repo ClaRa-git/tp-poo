@@ -10,8 +10,12 @@ class AdminController extends Controller
     // Dashboard
     public function dashboard(): void
     {
-        $view = new View( 'page:admin:home' );
+        $view = new View('page:admin:home');
 
-        $view->render();
+        $data = [
+            'title' => 'Tableau de bord - Admin Autodingo.com'
+        ];
+
+        $view->render($data);
     }
 }

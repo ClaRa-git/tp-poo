@@ -19,7 +19,6 @@ use Symplefony\View;
 use App\Controller\AdminController;
 use App\Controller\AuthController;
 use App\Controller\CategoryController;
-use App\Controller\CarController;
 use App\Controller\PageController;
 use App\Controller\UserController;
 use App\Middleware\AdminMiddleware;
@@ -84,19 +83,22 @@ final class App
             // Ajout
             $router->get('/users/add', [UserController::class, 'add']);
             $router->post('/users', [UserController::class, 'create']);
-
             // Liste
             $router->get('/users', [UserController::class, 'index']);
             // Détail
             $router->get('/users/{id}', [UserController::class, 'show']);
 
             // -- Category --
+            // Ajout
+            $router->get('/categories/add', [CategoryController::class, 'add']);
+            $router->post('/categories', [CategoryController::class, 'create']);
             // Liste
             $router->get('/categories', [CategoryController::class, 'index']);
-
-            // -- Car --
-            // Liste
-            $router->get('/cars', [CarController::class, 'index']);
+            // Détail/modification
+            $router->get('/categories/{id}', [CategoryController::class, 'show']);
+            $router->post('/categories/{id}', [CategoryController::class, 'update']);
+            // Suppression
+            $router->get('/categories/{id}/delete', [CategoryController::class, 'delete']);
         });
     }
 
